@@ -7,6 +7,8 @@ import { UserModule } from './users/user.module';
 import { UserEntity } from './users/user.entity';
 import { ApplicationModule } from './applications/application.module';
 import { ApplicationEntity } from './applications/application.entity';
+import { OrganisationModule } from './organisations/organisation.module';
+import { OrganisationEntity } from './organisations/organisation.entity';
 
 @Module({
   imports: [
@@ -20,12 +22,13 @@ import { ApplicationEntity } from './applications/application.entity';
         username: configService.get<string>('DB_USER'),
         password: configService.get<string>('DB_PASSWORD'),
         database: configService.get<string>('DB_DATABASE'),
-        entities: [ApplicationEntity, UserEntity],
+        entities: [ApplicationEntity, OrganisationEntity, UserEntity],
         synchronize: configService.get<string>('NODE_ENV') !== 'production',
       }),
       inject: [ConfigService],
     }),
     ApplicationModule,
+    OrganisationModule,
     UserModule,
   ],
   controllers: [AppController],
