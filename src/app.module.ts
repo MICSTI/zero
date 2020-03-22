@@ -9,6 +9,8 @@ import { ApplicationModule } from './applications/application.module';
 import { ApplicationEntity } from './applications/application.entity';
 import { OrganisationModule } from './organisations/organisation.module';
 import { OrganisationEntity } from './organisations/organisation.entity';
+import { BlockModule } from './blocks/block.module';
+import { BlockEntity } from './blocks/block.entity';
 
 @Module({
   imports: [
@@ -22,12 +24,18 @@ import { OrganisationEntity } from './organisations/organisation.entity';
         username: configService.get<string>('DB_USER'),
         password: configService.get<string>('DB_PASSWORD'),
         database: configService.get<string>('DB_DATABASE'),
-        entities: [ApplicationEntity, OrganisationEntity, UserEntity],
+        entities: [
+          ApplicationEntity,
+          BlockEntity,
+          OrganisationEntity,
+          UserEntity,
+        ],
         synchronize: configService.get<string>('NODE_ENV') !== 'production',
       }),
       inject: [ConfigService],
     }),
     ApplicationModule,
+    BlockModule,
     OrganisationModule,
     UserModule,
   ],
