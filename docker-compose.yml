@@ -1,0 +1,31 @@
+version: '3.7'
+
+services:
+  db:
+    image: postgres:12.1-alpine
+    container_name: zero_db
+    restart: always
+    environment:
+      POSTGRES_USER: '$DB_USER'
+      POSTGRES_PASSWORD: '$DB_PASSWORD'
+      POSTGRES_DB: '$DB_DATABASE'
+      POSTGRES_PORT: '$DB_PORT'
+    ports:
+      - 5432:5432
+    volumes:
+      - dbdata:/var/lib/psql
+  adminer:
+    image: wodby/adminer:4.7
+    container_name: zero_adminer
+    restart: always
+    environment:
+      ADMINER_DEFAULT_DB_HOST: '$DB_HOST'
+      ADMINER_DEFAULT_DB_DRIVER: 'pgsql'
+      ADMINER_DESIGN: 'lucas-sandery'
+    ports:
+      - 9000:9000
+    depends_on:
+      - db
+
+volumes:
+  dbdata:
